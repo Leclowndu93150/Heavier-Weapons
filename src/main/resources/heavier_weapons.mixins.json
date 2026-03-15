@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.leclowndu93150.heavier_weapons.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerCritMixin"
+  ],
+  "client": [
+    "client.AnimationStackMixin",
+    "client.GameRendererMixin",
+    "client.LevelRendererMixin",
+    "client.LocalPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
