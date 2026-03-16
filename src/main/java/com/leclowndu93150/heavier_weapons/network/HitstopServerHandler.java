@@ -33,7 +33,8 @@ public class HitstopServerHandler {
 
         var mainHandStack = attacker.getItemInHand(InteractionHand.MAIN_HAND);
         var attributes = WeaponRegistry.getAttributes(mainHandStack);
-        String category = attributes != null ? attributes.category() : null;
+        if (attributes == null) return;
+        String category = attributes.category();
 
         int hitstopTicks = Config.getHitstopTicks(category);
 
