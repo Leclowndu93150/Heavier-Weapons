@@ -1,0 +1,56 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev.legacyforge'
+}
+
+mixin {
+    add(sourceSets.main, "${mod_id}.refmap.json")
+    config("${mod_id}.mixins.json")
+    config("${mod_id}.forge.mixins.json")
+}
+
+legacyForge {
+    version = "${minecraft_version}-${forge_version}"
+    validateAccessTransformers = true
+
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+
+    runs {
+        client {
+            client()
+            ideName = "Forge Client"
+        }
+        server {
+            server()
+            ideName = "Forge Server"
+            programArgument '--nogui'
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+repositories {
+    maven { url = "https://cursemaven.com" }
+}
+
+dependencies {
+    compileOnly project(":common")
+    implementation "curse.maven:better-combat-by-daedelus-639842:7287334"
+    implementation "curse.maven:cloth-config-348521:5729105"
+    implementation "curse.maven:playeranimator-658587:4587214"
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+}
+
+jar {
+    finalizedBy('reobfJar')
+    manifest.attributes([
+        "MixinConfigs": "${mod_id}.mixins.json,${mod_id}.forge.mixins.json"
+    ])
+}

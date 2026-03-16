@@ -1,0 +1,38 @@
+plugins {
+    id 'multiloader-common'
+    id 'net.neoforged.moddev.legacyforge'
+}
+
+legacyForge {
+    mcpVersion = minecraft_version
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+}
+
+repositories {
+    maven { url = "https://cursemaven.com" }
+}
+
+dependencies {
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+    implementation 'com.google.code.findbugs:jsr305:3.0.1'
+    compileOnly "curse.maven:better-combat-by-daedelus-639842:7287334"
+    compileOnly "curse.maven:cloth-config-348521:5729105"
+    compileOnly "curse.maven:playeranimator-658587:4587214"
+}
+
+configurations {
+    commonJava {
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeConsumed = true
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.sourceDirectories.singleFile
+    commonResources sourceSets.main.resources.sourceDirectories.singleFile
+}
