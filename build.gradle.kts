@@ -41,8 +41,8 @@ prism {
         parchmentMappingsVersion = "2023.09.03"
 
         common {
-            compileOnly("curse.maven:better-combat-by-daedelus-639842:7287333")
-            compileOnly("curse.maven:playeranimator-658587:4587215")
+            modCompileOnly("curse.maven:better-combat-by-daedelus-639842:7287334")
+            modCompileOnly("curse.maven:playeranimator-658587:4587214")
         }
 
         fabric {
@@ -81,9 +81,9 @@ prism {
         }
 
         common {
-            compileOnly("curse.maven:better-combat-by-daedelus-639842:7721843")
-            compileOnly("curse.maven:playeranimator-658587:7389814")
-            compileOnly("curse.maven:critical-strike-1379562:7224268")
+            modCompileOnly("curse.maven:better-combat-by-daedelus-639842:7721843")
+            modCompileOnly("curse.maven:playeranimator-658587:7389814")
+            modCompileOnly("curse.maven:critical-strike-1379562:7224268")
             compileOnly("org.ow2.asm:asm-tree:9.7")
             compileOnly("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1")
             annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1")
