@@ -1,0 +1,43 @@
+modLoader = "javafml"
+loaderVersion = "${neoforge_loader_version_range}"
+license = "${license}"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "${mod_name}"
+authors = "${mod_author}"
+description = '''${description}'''
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+[[dependencies."${mod_id}"]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neoforge_loader_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${minecraft_version},1.22)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "bettercombat"
+type = "required"
+reason = "Required for attack animation hitstop integration"
+versionRange = "[1.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "critical_strike"
+type = "optional"
+reason = "Optional integration for RNG-based critical hit detection"
+versionRange = "[1.0,)"
+ordering = "NONE"
+side = "BOTH"
