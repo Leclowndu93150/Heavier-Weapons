@@ -1,6 +1,9 @@
 package com.leclowndu93150.heavier_weapons.platform.services;
 
+import com.leclowndu93150.heavier_weapons.network.HitstopType;
 import net.minecraft.server.level.ServerPlayer;
+
+import java.nio.file.Path;
 
 public interface IPlatformHelper {
 
@@ -8,5 +11,7 @@ public interface IPlatformHelper {
 
     boolean isModLoaded(String modId);
 
-    void sendHitstopPacket(ServerPlayer attacker, int[] targetIds, int durationTicks, boolean isCrit);
+    Path getConfigDir();
+
+    void sendHitstopPacket(ServerPlayer player, int[] targetIds, int durationTicks, HitstopType type);
 }

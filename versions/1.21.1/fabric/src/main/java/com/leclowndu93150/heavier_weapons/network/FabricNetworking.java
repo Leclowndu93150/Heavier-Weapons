@@ -16,15 +16,15 @@ public class FabricNetworking {
     public static void initClient() {
         ClientPlayNetworking.registerGlobalReceiver(HitstopPacket.TYPE, (payload, context) -> {
             context.client().execute(() -> HitstopHandler.handlePacket(
-                    payload.attackerId(), payload.targetIds(), payload.durationTicks(), payload.isCrit()));
+                    payload.attackerId(), payload.targetIds(), payload.durationTicks(), payload.hitstopType()));
         });
     }
 
-    public static void sendToTrackingAndSelf(ServerPlayer attacker, int[] targetIds, int durationTicks, boolean isCrit) {
-        HitstopPacket packet = new HitstopPacket(attacker.getId(), targetIds, durationTicks, isCrit);
-        ServerPlayNetworking.send(attacker, packet);
-        for (ServerPlayer tracker : PlayerLookup.tracking(attacker)) {
-            if (tracker != attacker) {
+    public static void sendToTrackingAndSelf(ServerPlayer player, int[] targetIds, int durationTicks, HitstopType type) {
+        HitstopPacket packet = new HitstopPacket(player.getId(), targetIds, durationTicks, type);
+        ServerPlayNetworking.send(player, packet);
+        for (ServerPlayer tracker : PlayerLookup.tracking(player)) {
+            if (tracker != player) {
                 ServerPlayNetworking.send(tracker, packet);
             }
         }

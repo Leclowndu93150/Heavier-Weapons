@@ -5,7 +5,7 @@ import com.leclowndu93150.heavier_weapons.client.HitstopHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public class ForgeNetworking {
 
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "2";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(Constants.MOD_ID, "main"),
             () -> PROTOCOL_VERSION,
@@ -26,22 +26,22 @@ public class ForgeNetworking {
         CHANNEL.registerMessage(0, HitstopMessage.class, HitstopMessage::encode, HitstopMessage::decode, HitstopMessage::handle);
     }
 
-    public static void sendToTrackingAndSelf(ServerPlayer attacker, int[] targetIds, int durationTicks, boolean isCrit) {
-        HitstopMessage msg = new HitstopMessage(attacker.getId(), targetIds, durationTicks, isCrit);
-        CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> attacker), msg);
+    public static void sendToTrackingAndSelf(ServerPlayer player, int[] targetIds, int durationTicks, HitstopType type) {
+        HitstopMessage msg = new HitstopMessage(player.getId(), targetIds, durationTicks, type);
+        CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), msg);
     }
 
     public static class HitstopMessage {
         public final int attackerId;
         public final int[] targetIds;
         public final int durationTicks;
-        public final boolean isCrit;
+        public final HitstopType type;
 
-        public HitstopMessage(int attackerId, int[] targetIds, int durationTicks, boolean isCrit) {
+        public HitstopMessage(int attackerId, int[] targetIds, int durationTicks, HitstopType type) {
             this.attackerId = attackerId;
             this.targetIds = targetIds;
             this.durationTicks = durationTicks;
-            this.isCrit = isCrit;
+            this.type = type;
         }
 
         public static void encode(HitstopMessage msg, FriendlyByteBuf buf) {
@@ -51,7 +51,7 @@ public class ForgeNetworking {
                 buf.writeVarInt(id);
             }
             buf.writeVarInt(msg.durationTicks);
-            buf.writeBoolean(msg.isCrit);
+            buf.writeEnum(msg.type);
         }
 
         public static HitstopMessage decode(FriendlyByteBuf buf) {
@@ -62,13 +62,13 @@ public class ForgeNetworking {
                 targetIds[i] = buf.readVarInt();
             }
             int duration = buf.readVarInt();
-            boolean isCrit = buf.readBoolean();
-            return new HitstopMessage(attackerId, targetIds, duration, isCrit);
+            HitstopType type = buf.readEnum(HitstopType.class);
+            return new HitstopMessage(attackerId, targetIds, duration, type);
         }
 
-        public static void handle(HitstopMessage msg, Supplier<net.minecraftforge.network.NetworkEvent.Context> ctx) {
+        public static void handle(HitstopMessage msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                HitstopHandler.handlePacket(msg.attackerId, msg.targetIds, msg.durationTicks, msg.isCrit);
+                HitstopHandler.handlePacket(msg.attackerId, msg.targetIds, msg.durationTicks, msg.type);
             });
             ctx.get().setPacketHandled(true);
         }

@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-public record HitstopPacket(int attackerId, int[] targetIds, int durationTicks, boolean isCrit) implements CustomPacketPayload {
+public record HitstopPacket(int attackerId, int[] targetIds, int durationTicks, HitstopType hitstopType) implements CustomPacketPayload {
 
     public static final Type<HitstopPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(HeavierWeapons.MODID, "hitstop"));
 
@@ -23,7 +23,7 @@ public record HitstopPacket(int attackerId, int[] targetIds, int durationTicks, 
             ByteBufCodecs.VAR_INT.encode(buf, id);
         }
         ByteBufCodecs.VAR_INT.encode(buf, packet.durationTicks);
-        ByteBufCodecs.BOOL.encode(buf, packet.isCrit);
+        ByteBufCodecs.VAR_INT.encode(buf, packet.hitstopType.ordinal());
     }
 
     private static HitstopPacket decode(ByteBuf buf) {
@@ -34,8 +34,8 @@ public record HitstopPacket(int attackerId, int[] targetIds, int durationTicks, 
             targetIds[i] = ByteBufCodecs.VAR_INT.decode(buf);
         }
         int duration = ByteBufCodecs.VAR_INT.decode(buf);
-        boolean isCrit = ByteBufCodecs.BOOL.decode(buf);
-        return new HitstopPacket(attackerId, targetIds, duration, isCrit);
+        HitstopType hitstopType = HitstopType.values()[ByteBufCodecs.VAR_INT.decode(buf)];
+        return new HitstopPacket(attackerId, targetIds, duration, hitstopType);
     }
 
     @Override

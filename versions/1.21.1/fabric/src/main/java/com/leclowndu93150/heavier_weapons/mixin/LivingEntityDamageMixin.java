@@ -18,7 +18,7 @@ public abstract class LivingEntityDamageMixin {
         if (!HeavierWeapons.enabled) return;
         LivingEntity self = (LivingEntity) (Object) this;
         if (source.getEntity() instanceof ServerPlayer attacker) {
-            HitstopServerHandler.onPlayerDamageEntity(attacker, self.getId(), source);
+            HitstopServerHandler.onPlayerDamageEntity(attacker, self, source);
         }
     }
 }

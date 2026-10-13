@@ -35,6 +35,7 @@ public class HeavierWeaponsForge {
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event) {
+        HitstopServerHandler.init();
     }
 
     private void onClientSetup(FMLClientSetupEvent event) {
@@ -46,7 +47,7 @@ public class HeavierWeaponsForge {
         if (!CommonClass.enabled) return;
         DamageSource source = event.getSource();
         if (source.getEntity() instanceof ServerPlayer attacker) {
-            HitstopServerHandler.onPlayerDamageEntity(attacker, event.getEntity().getId(), source);
+            HitstopServerHandler.onPlayerDamageEntity(attacker, event.getEntity(), source);
         }
     }
 

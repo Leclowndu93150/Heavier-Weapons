@@ -42,20 +42,20 @@ public class HeavierWeaponsNeoForge {
     }
 
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
-        var registrar = event.registrar(HeavierWeapons.MODID).versioned("1");
+        var registrar = event.registrar(HeavierWeapons.MODID).versioned("2");
         registrar.playToClient(HitstopPacket.TYPE, HitstopPacket.STREAM_CODEC, this::handleHitstopPacket);
     }
 
     private void handleHitstopPacket(HitstopPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> HitstopHandler.handlePacket(
-                packet.attackerId(), packet.targetIds(), packet.durationTicks(), packet.isCrit()));
+                packet.attackerId(), packet.targetIds(), packet.durationTicks(), packet.hitstopType()));
     }
 
     private static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!HeavierWeapons.enabled) return;
         DamageSource source = event.getSource();
         if (source.getEntity() instanceof ServerPlayer attacker) {
-            HitstopServerHandler.onPlayerDamageEntity(attacker, event.getEntity().getId(), source);
+            HitstopServerHandler.onPlayerDamageEntity(attacker, event.getEntity(), source);
         }
     }
 

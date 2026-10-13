@@ -1,0 +1,134 @@
+{
+  "hitstop.light": {
+    "subtitle": "subtitles.heavier_weapons.hitstop",
+    "sounds": [
+      {
+        "name": "minecraft:damage/hit1",
+        "pitch": 1.3,
+        "volume": 0.5
+      },
+      {
+        "name": "minecraft:damage/hit2",
+        "pitch": 1.3,
+        "volume": 0.5
+      },
+      {
+        "name": "minecraft:damage/hit3",
+        "pitch": 1.3,
+        "volume": 0.5
+      }
+    ]
+  },
+  "hitstop.medium": {
+    "subtitle": "subtitles.heavier_weapons.hitstop",
+    "sounds": [
+      {
+        "name": "minecraft:damage/hit1",
+        "pitch": 0.9,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:damage/hit2",
+        "pitch": 0.9,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:damage/hit3",
+        "pitch": 0.9,
+        "volume": 0.8
+      }
+    ]
+  },
+  "hitstop.heavy": {
+    "subtitle": "subtitles.heavier_weapons.hitstop",
+    "sounds": [
+      {
+        "name": "minecraft:damage/hit1",
+        "pitch": 0.7,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:damage/hit2",
+        "pitch": 0.7,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:damage/hit3",
+        "pitch": 0.7,
+        "volume": 1.0
+      }
+    ]
+  },
+  "hitstop.crack": {
+    "sounds": [
+      {
+        "name": "minecraft:mob/zombie/wood1",
+        "pitch": 1.6,
+        "volume": 0.2
+      },
+      {
+        "name": "minecraft:mob/zombie/wood2",
+        "pitch": 1.6,
+        "volume": 0.2
+      },
+      {
+        "name": "minecraft:mob/zombie/wood3",
+        "pitch": 1.6,
+        "volume": 0.2
+      },
+      {
+        "name": "minecraft:mob/zombie/wood4",
+        "pitch": 1.6,
+        "volume": 0.2
+      }
+    ]
+  },
+  "hitstop.heavy_crack": {
+    "sounds": [
+      {
+        "name": "minecraft:mob/zombie/wood1",
+        "pitch": 1.2,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:mob/zombie/wood2",
+        "pitch": 1.2,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:mob/zombie/wood3",
+        "pitch": 1.2,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:mob/zombie/wood4",
+        "pitch": 1.2,
+        "volume": 0.3
+      }
+    ]
+  },
+  "hitstop.slam": {
+    "sounds": [
+      {
+        "name": "minecraft:item/mace/smash_ground1",
+        "pitch": 1.0,
+        "volume": 0.5
+      },
+      {
+        "name": "minecraft:item/mace/smash_ground2",
+        "pitch": 1.0,
+        "volume": 0.5
+      },
+      {
+        "name": "minecraft:item/mace/smash_ground3",
+        "pitch": 1.0,
+        "volume": 0.5
+      },
+      {
+        "name": "minecraft:item/mace/smash_ground4",
+        "pitch": 1.0,
+        "volume": 0.5
+      }
+    ]
+  }
+}

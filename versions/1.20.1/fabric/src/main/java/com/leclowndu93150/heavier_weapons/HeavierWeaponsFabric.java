@@ -1,6 +1,7 @@
 package com.leclowndu93150.heavier_weapons;
 
 import com.leclowndu93150.heavier_weapons.network.FabricNetworking;
+import com.leclowndu93150.heavier_weapons.network.HitstopServerHandler;
 import net.fabricmc.api.ModInitializer;
 
 public class HeavierWeaponsFabric implements ModInitializer {
@@ -9,5 +10,6 @@ public class HeavierWeaponsFabric implements ModInitializer {
     public void onInitialize() {
         CommonClass.init();
         FabricNetworking.init();
+        HitstopServerHandler.init();
     }
 }

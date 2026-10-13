@@ -26,25 +26,25 @@ public class FabricNetworking {
                 targetIds[i] = buf.readVarInt();
             }
             int durationTicks = buf.readVarInt();
-            boolean isCrit = buf.readBoolean();
-            client.execute(() -> HitstopHandler.handlePacket(attackerId, targetIds, durationTicks, isCrit));
+            HitstopType type = buf.readEnum(HitstopType.class);
+            client.execute(() -> HitstopHandler.handlePacket(attackerId, targetIds, durationTicks, type));
         });
     }
 
-    public static void sendToTrackingAndSelf(ServerPlayer attacker, int[] targetIds, int durationTicks, boolean isCrit) {
+    public static void sendToTrackingAndSelf(ServerPlayer player, int[] targetIds, int durationTicks, HitstopType type) {
         FriendlyByteBuf buf = PacketByteBufs.create();
-        buf.writeVarInt(attacker.getId());
+        buf.writeVarInt(player.getId());
         buf.writeVarInt(targetIds.length);
         for (int id : targetIds) {
             buf.writeVarInt(id);
         }
         buf.writeVarInt(durationTicks);
-        buf.writeBoolean(isCrit);
+        buf.writeEnum(type);
 
-        ServerPlayNetworking.send(attacker, HITSTOP_PACKET_ID, PacketByteBufs.duplicate(buf));
+        ServerPlayNetworking.send(player, HITSTOP_PACKET_ID, PacketByteBufs.duplicate(buf));
 
-        for (ServerPlayer tracker : PlayerLookup.tracking(attacker)) {
-            if (tracker != attacker) {
+        for (ServerPlayer tracker : PlayerLookup.tracking(player)) {
+            if (tracker != player) {
                 ServerPlayNetworking.send(tracker, HITSTOP_PACKET_ID, PacketByteBufs.duplicate(buf));
             }
         }
