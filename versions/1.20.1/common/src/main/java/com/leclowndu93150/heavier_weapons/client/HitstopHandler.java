@@ -14,6 +14,8 @@ import net.minecraft.world.entity.player.Player;
 
 public class HitstopHandler {
 
+    private static final double ENTITY_SHAKE_DISTANCE = 0.15;
+
     public static void init() {
         BetterCombatClientEvents.ATTACK_HIT.register((player, attackHand, targets, cursorTarget) -> {
             HWConfig.reloadIfChanged();
@@ -51,10 +53,13 @@ public class HitstopHandler {
 
         int freezeTicks = HWConfig.getEntityFreezeTicks(durationTicks);
         if (HWConfig.entityFreezeEnabled && freezeTicks > 0) {
+            double shakeMagnitude = HWConfig.entityShakeEnabled
+                    ? computeShakeIntensity(durationTicks) * HWConfig.entityShakeIntensity * ENTITY_SHAKE_DISTANCE
+                    : 0;
             for (int targetId : targetIds) {
                 Entity target = mc.level.getEntity(targetId);
                 if (target != null && !HWConfig.entityBlacklist.matches(target)) {
-                    EntityFreezeManager.freeze(target, freezeTicks);
+                    EntityFreezeManager.freeze(target, freezeTicks, attackerEntity, shakeMagnitude);
                 }
             }
         }

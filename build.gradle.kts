@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.leclowndu93150"
-version = "1.2.0"
+version = "1.3.0"
 
 prism {
     curseMaven()
@@ -21,18 +21,8 @@ prism {
     publishing {
         status = STABLE
         changelog = """
-            Fixes
-            - Config changes now apply: every value is parsed on its own (one bad value no longer resets the rest), edits apply without restarting, and the file is read from the loader's config folder
-            - New config keys are added to existing config files automatically, the rest of the file is left untouched
-
-            Additions (all optional, see heavier_weapons.properties)
-            - maxEntityFreezeTicks: cap how long hit mobs freeze, so long hitstops don't break mob animations
-            - entityBlacklist: entities that are never frozen or stunned, supports ids and #tags, bosses are blacklisted by default
-            - Hitstop impact sounds that get heavier with the weapon (light, medium and heavy layers), played on hit or after the hitstop delay, every layer can be swapped for any sound
-            - Per-category hitstop delays and hitstop delay scaling with attack speed
-            - Stun system: mobs build up stagger from hits and get stunned once it breaks their threshold, with per-mob thresholds, armor resistance, a backstab bonus and resistance after repeated stuns
-            - Shield stun: blocking a melee attack stuns the attacker, a disabled shield stuns the attacker and gives you hitstop and camera shake
-            - Parry: blocking right after raising your shield stuns the attacker longer and makes them take extra damage, also works with Sword Blocking Mechanics parries
+            Additions
+            - Entity shake: frozen mobs now shake in place along the hit direction before getting knocked back, like Smash Bros hitlag, heavier hits shake harder (toggle with entityShakeEnabled, scale with entityShakeIntensity)
         """.trimIndent()
 
         curseforge {

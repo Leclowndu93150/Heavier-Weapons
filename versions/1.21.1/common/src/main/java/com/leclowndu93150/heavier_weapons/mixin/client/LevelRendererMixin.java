@@ -44,10 +44,13 @@ public abstract class LevelRendererMixin {
         hw$savedXRot = entity.getXRot();
         hw$savedXRotO = entity.xRotO;
 
-        entity.setPosRaw(state.x, state.y, state.z);
-        entity.xOld = state.x;
+        double shake = state.getShake(partialTick);
+        double frozenX = state.x + state.shakeX * shake;
+        double frozenZ = state.z + state.shakeZ * shake;
+        entity.setPosRaw(frozenX, state.y, frozenZ);
+        entity.xOld = frozenX;
         entity.yOld = state.y;
-        entity.zOld = state.z;
+        entity.zOld = frozenZ;
         entity.setYRot(state.yaw);
         entity.yRotO = state.yaw;
         entity.setXRot(state.pitch);
