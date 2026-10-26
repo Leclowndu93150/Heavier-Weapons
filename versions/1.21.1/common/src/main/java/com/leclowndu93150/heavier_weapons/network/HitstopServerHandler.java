@@ -3,6 +3,7 @@ package com.leclowndu93150.heavier_weapons.network;
 import com.leclowndu93150.heavier_weapons.HWConfig;
 import com.leclowndu93150.heavier_weapons.compat.CriticalStrikeCompat;
 import com.leclowndu93150.heavier_weapons.compat.SwordBlockingCompat;
+import com.leclowndu93150.heavier_weapons.knockback.KnockbackDelayManager;
 import com.leclowndu93150.heavier_weapons.platform.Services;
 import com.leclowndu93150.heavier_weapons.stun.StunManager;
 import net.bettercombat.logic.WeaponRegistry;
@@ -60,6 +61,7 @@ public class HitstopServerHandler {
         if (hitstopTicks <= 0) return;
 
         Services.PLATFORM.sendHitstopPacket(attacker, new int[]{target.getId()}, hitstopTicks, isCrit ? HitstopType.CRIT : HitstopType.HIT);
+        holdKnockback(target, hitstopTicks);
 
         if (HWConfig.stunEnabled) {
             StunManager.onHit(attacker, target, hitstopTicks);
@@ -104,6 +106,12 @@ public class HitstopServerHandler {
     private static void sendShieldHitstop(Player player, LivingEntity attacker, int ticks) {
         if (ticks > 0 && player instanceof ServerPlayer serverPlayer) {
             Services.PLATFORM.sendHitstopPacket(serverPlayer, new int[]{attacker.getId()}, ticks, HitstopType.SHIELD);
+            holdKnockback(attacker, ticks);
         }
+    }
+
+    private static void holdKnockback(LivingEntity target, int hitstopTicks) {
+        if (!HWConfig.entityFreezeEnabled || !HWConfig.delayKnockback || HWConfig.entityBlacklist.matches(target)) return;
+        KnockbackDelayManager.hold(target, HWConfig.getEntityFreezeTicks(hitstopTicks));
     }
 }

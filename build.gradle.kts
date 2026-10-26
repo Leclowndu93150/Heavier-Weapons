@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.leclowndu93150"
-version = "1.3.0"
+version = "1.4.0"
 
 prism {
     curseMaven()
@@ -22,7 +22,7 @@ prism {
         status = STABLE
         changelog = """
             Additions
-            - Entity shake: frozen mobs now shake in place along the hit direction before getting knocked back, like Smash Bros hitlag, heavier hits shake harder (toggle with entityShakeEnabled, scale with entityShakeIntensity)
+            - Delayed knockback: hit mobs now stay in place while frozen and only get knocked back once the freeze ends, so the shake flows straight into the launch instead of snapping to where the mob already flew (toggle with delayKnockback)
         """.trimIndent()
 
         curseforge {

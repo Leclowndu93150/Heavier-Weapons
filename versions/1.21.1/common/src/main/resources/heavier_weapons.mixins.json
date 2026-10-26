@@ -9,6 +9,7 @@
     "PlayerCritMixin",
     "CriticalStrikeCritMixin",
     "LivingEntityHurtMixin",
+    "LivingEntityKnockbackMixin",
     "LivingEntityInvoker",
     "MobAccessor",
     "MobStunMixin",

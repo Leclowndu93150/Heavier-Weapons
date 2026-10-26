@@ -59,6 +59,7 @@ public class HWConfig {
     public static int maxEntityFreezeTicks = -1;
     public static boolean entityShakeEnabled = true;
     public static double entityShakeIntensity = 1.0;
+    public static boolean delayKnockback = true;
     public static EntityFilter entityBlacklist = EntityFilter.parse(DEFAULT_ENTITY_BLACKLIST);
     public static boolean stunEnabled = false;
     public static double stunDurationMultiplier = 3.0;
@@ -163,6 +164,7 @@ public class HWConfig {
         maxEntityFreezeTicks = get(props, "maxEntityFreezeTicks", -1, Integer::parseInt);
         entityShakeEnabled = get(props, "entityShakeEnabled", true, Boolean::parseBoolean);
         entityShakeIntensity = get(props, "entityShakeIntensity", 1.0, Double::parseDouble);
+        delayKnockback = get(props, "delayKnockback", true, Boolean::parseBoolean);
         entityBlacklist = EntityFilter.parse(props.getProperty("entityBlacklist", DEFAULT_ENTITY_BLACKLIST));
         stunEnabled = get(props, "stunEnabled", false, Boolean::parseBoolean);
         stunDurationMultiplier = get(props, "stunDurationMultiplier", 3.0, Double::parseDouble);
@@ -268,6 +270,7 @@ public class HWConfig {
                 new Entry("maxEntityFreezeTicks", "Maximum ticks a hit entity stays frozen (-1 = same as the hitstop duration)", maxEntityFreezeTicks),
                 new Entry("entityShakeEnabled", "Frozen entities shake in place along the hit direction before getting knocked back", entityShakeEnabled),
                 new Entry("entityShakeIntensity", "Entity shake intensity multiplier", entityShakeIntensity),
+                new Entry("delayKnockback", "Hit entities stay in place while frozen and only get knocked back once the freeze ends", delayKnockback),
                 new Entry("entityBlacklist", "Entities that are never frozen or stunned, entity ids or #tags, format: #forge:bosses,minecraft:warden", DEFAULT_ENTITY_BLACKLIST),
                 new Entry("stunEnabled", "Stun mobs (stop their AI) once enough hits break their stagger threshold", stunEnabled),
                 new Entry("stunDurationMultiplier", "Stun duration in ticks = hitstop ticks of the breaking hit x this", stunDurationMultiplier),
